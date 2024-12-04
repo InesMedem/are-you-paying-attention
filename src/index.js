@@ -27,6 +27,13 @@ function EditComponent(props) {
     props.setAttributes({ question: value });
   }
 
+  function deleteAnswer(indexToDelete) {
+    const newAnswers = props.attributes.answers.filter(function (x, index) {
+      return index != indexToDelete;
+    });
+    props.setAttributes({ answers: newAnswers });
+  }
+
   return (
     <div className="paying-attention-edit-block">
       <TextControl
@@ -42,7 +49,7 @@ function EditComponent(props) {
               <TextControl
                 value={answers}
                 onChange={(newValue) => {
-                  const newAnswers = [props.attributes.answers];
+                  const newAnswers = props.attributes.answers([]);
                   newAnswers[index] = newValue;
                   props.setAttributes({ answers: newAnswers });
                 }}
@@ -54,7 +61,7 @@ function EditComponent(props) {
               </Button>
             </FlexItem>
             <FlexItem>
-              <Button>Delete</Button>
+              <Button onClick={() => deleteAnswer(index)}>Delete</Button>
             </FlexItem>
           </Flex>
         );
