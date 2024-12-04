@@ -35,11 +35,18 @@ function EditComponent(props) {
         onChange={updateQuestion}
       />
       <p>Answers: </p>
-      {props.attributes.answers.map(function (answers) {
+      {props.attributes.answers.map(function (answers, index) {
         return (
-          <Flex label="Answers:">
+          <Flex>
             <FlexBlock>
-              <TextControl value={answers} />
+              <TextControl
+                value={answers}
+                onChange={(newValue) => {
+                  const newAnswers = [props.attributes.answers];
+                  newAnswers[index] = newValue;
+                  props.setAttributes({ answers: newAnswers });
+                }}
+              />
             </FlexBlock>
             <FlexItem>
               <Button>
@@ -52,7 +59,14 @@ function EditComponent(props) {
           </Flex>
         );
       })}
-      <Button isPrimary>Add another answer </Button>
+      <Button
+        isPrimary
+        onClick={() => {
+          props.setAttributes({ answers: [...props.attributes.answers, ""] });
+        }}
+      >
+        Add another answer
+      </Button>
     </div>
   );
 }

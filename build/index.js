@@ -147,17 +147,27 @@ function EditComponent(props) {
     label: "Question:",
     value: props.attributes.question,
     onChange: updateQuestion
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Answers: "), props.attributes.answers.map(function (answers) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Flex, {
-      label: "Answers:"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexBlock, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
-      value: answers
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Answers: "), props.attributes.answers.map(function (answers, index) {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Flex, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexBlock, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+      value: answers,
+      onChange: newValue => {
+        const newAnswers = [props.attributes.answers];
+        newAnswers[index] = newValue;
+        props.setAttributes({
+          answers: newAnswers
+        });
+      }
     })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Icon, {
       icon: "star-empty"
     }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, null, "Delete")));
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    isPrimary: true
-  }, "Add another answer "));
+    isPrimary: true,
+    onClick: () => {
+      props.setAttributes({
+        answers: [...props.attributes.answers, ""]
+      });
+    }
+  }, "Add another answer"));
 }
 })();
 
