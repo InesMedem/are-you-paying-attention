@@ -14,6 +14,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   category: "common",
   attributes: {
     question: { type: "string" },
+    answers: { type: "array", default: ["red", "blue"] },
   },
   edit: EditComponent,
   save: function (props) {
@@ -22,14 +23,6 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
 });
 
 function EditComponent(props) {
-  function updateSkyColor(event) {
-    props.setAttributes({ skyColor: event.target.value });
-  }
-
-  function updateGrassColor(event) {
-    props.setAttributes({ grassColor: event.target.value });
-  }
-
   function updateQuestion(value) {
     props.setAttributes({ question: value });
   }
@@ -42,19 +35,23 @@ function EditComponent(props) {
         onChange={updateQuestion}
       />
       <p>Answers: </p>
-      <Flex label="Answers:">
-        <FlexBlock>
-          <TextControl />
-        </FlexBlock>
-        <FlexItem>
-          <Button>
-            <Icon icon="star-empty"></Icon>
-          </Button>
-        </FlexItem>
-        <FlexItem>
-          <Button>Delete</Button>
-        </FlexItem>
-      </Flex>
+      {props.attributes.answers.map(function (answers) {
+        return (
+          <Flex label="Answers:">
+            <FlexBlock>
+              <TextControl value={answers} />
+            </FlexBlock>
+            <FlexItem>
+              <Button>
+                <Icon icon="star-empty"></Icon>
+              </Button>
+            </FlexItem>
+            <FlexItem>
+              <Button>Delete</Button>
+            </FlexItem>
+          </Flex>
+        );
+      })}
       <Button isPrimary>Add another answer </Button>
     </div>
   );
