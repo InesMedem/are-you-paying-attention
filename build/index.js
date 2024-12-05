@@ -152,6 +152,11 @@ function EditComponent(props) {
     props.setAttributes({
       answers: newAnswers
     });
+    if (indexToDelete == props.attributes.correctAnswer) {
+      props.setAttributes({
+        correctAnswer: undefined
+      });
+    }
   }
 
   // if you are the same value as what came though the onChange (index) event , ie value == index then mark as correct
