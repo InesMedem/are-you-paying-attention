@@ -15,6 +15,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   attributes: {
     question: { type: "string" },
     answers: { type: "array", default: ["red", "blue"] },
+    correctAnswer: { type: "number", default: "undefined" },
   },
   edit: EditComponent,
   save: function (props) {
@@ -34,6 +35,11 @@ function EditComponent(props) {
     props.setAttributes({ answers: newAnswers });
   }
 
+  // if you are the same value as what came though the onChange (index) event , ie value == index then mark as correct
+  function markAsCorrect(index) {
+    props.setAttributes({ correctAnswer: index });
+  }
+
   return (
     <div className="paying-attention-edit-block">
       <TextControl
@@ -47,17 +53,24 @@ function EditComponent(props) {
           <Flex>
             <FlexBlock>
               <TextControl
+                // autoFocus={answers == undefined}
                 value={answers}
                 onChange={(newValue) => {
-                  const newAnswers = props.attributes.answers([]);
+                  const newAnswers = [...props.attributes.answers];
                   newAnswers[index] = newValue;
                   props.setAttributes({ answers: newAnswers });
                 }}
               />
             </FlexBlock>
             <FlexItem>
-              <Button>
-                <Icon icon="star-empty"></Icon>
+              <Button onClick={() => markAsCorrect(index)}>
+                <Icon
+                  icon={
+                    props.attributes.correctAnswer == index
+                      ? "star-filled"
+                      : "star-empty"
+                  }
+                ></Icon>
               </Button>
             </FlexItem>
             <FlexItem>
