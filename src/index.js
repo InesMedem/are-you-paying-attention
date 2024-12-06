@@ -8,13 +8,43 @@ import {
 } from "@wordpress/components";
 import "./index.scss";
 
+// const ourStartFunction = () => {
+//   let locked = false;
+
+//   wp.data.subscribe(() => {
+//     // Check if there are blocks with specific conditions
+//     const hasCorrectAnswer = wp.data
+//       .select("core/block-editor")
+//       .getBlocks()
+//       .some(
+//         (block) =>
+//           block.name === "ourplugin/are-you-paying-attention" &&
+//           block.attributes.correctAnswer
+//       );
+
+//     if (hasCorrectAnswer && !locked) {
+//       locked = true;
+//       wp.data.dispatch("core/editor").lockPostSaving();
+//       console.log("Post saving locked.");
+//     }
+
+//     if (!hasCorrectAnswer && locked) {
+//       locked = false;
+//       wp.data.dispatch("core/editor").unlockPostSaving();
+//       console.log("Post saving unlocked.");
+//     }
+//   });
+// };
+
+// ourStartFunction();
+
 wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   title: "Are You Paying Attention?",
   icon: "smiley",
   category: "common",
   attributes: {
     question: { type: "string" },
-    answers: { type: "array", default: ["red", "blue"] },
+    answers: { type: "array", default: [""] },
     correctAnswer: { type: "number", default: "undefined" },
   },
   edit: EditComponent,
